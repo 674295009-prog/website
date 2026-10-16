@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หลักสูตรการพัฒนาแอปพลิเคชัน | Application Development Course</title>
+    <!-- Google Fonts: Prompt & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+        .code-container {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Brand / Logo -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
+                        <i data-lucide="code-2" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <span class="text-base sm:text-lg font-bold text-slate-900 leading-tight block">AppDev 101</span>
+                        <span class="text-xs text-brand-600 font-medium hidden sm:block">การพัฒนาแอปพลิเคชัน</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="#overview" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors">ภาพรวมวิชา</a>
+                    <a href="#modules" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors">โครงสร้างเนื้อหา</a>
+                    <a href="#techstack" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors">เครื่องมือและเทคโนโลยี</a>
+                    <a href="#sdlc" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors">วงจร SDLC</a>
+                    <a href="#interactive-lab" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors">ห้องทดลองโค้ด</a>
+                    <a href="#quiz" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors">แบบทดสอบ</a>
+                    <a href="#creator" class="px-3 py-2 rounded-lg text-sm font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 transition-colors">ผู้จัดทำ</a>
+                </nav>
+
+                <!-- Action CTA & Mobile Menu Toggle -->
+                <div class="flex items-center gap-3">
+                    <a href="#modules" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-xl hover:bg-brand-700 shadow-sm shadow-brand-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        <span>เริ่มศึกษา</span>
+                    </a>
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-600 hover:bg-slate-100 md:hidden focus:outline-none" aria-label="เปิดเมนู">
+                        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-200 bg-white/95 px-4 pt-2 pb-4 space-y-1">
+            <a href="#overview" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">ภาพรวมวิชา</a>
+            <a href="#modules" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">โครงสร้างเนื้อหา</a>
+            <a href="#techstack" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">เครื่องมือและเทคโนโลยี</a>
+            <a href="#sdlc" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">วงจร SDLC</a>
+            <a href="#interactive-lab" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">ห้องทดลองโค้ด</a>
+            <a href="#quiz" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">แบบทดสอบ</a>
+            <a href="#creator" class="mobile-link block px-3 py-2.5 rounded-lg text-base font-medium text-brand-600 bg-brand-50 hover:bg-brand-100">ผู้จัดทำ (นายนัทวัฒน์)</a>
+            <div class="pt-2">
+                <a href="#modules" class="mobile-link flex items-center justify-center gap-2 w-full py-2.5 bg-brand-600 text-white font-medium rounded-xl">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> เริ่มบทเรียน
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="hero" class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 bg-gradient-to-b from-indigo-50/70 via-white to-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-3xl mx-auto space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs sm:text-sm font-medium">
+                        <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse"></span>
+                        รหัสวิชา CS320 : Application Development & Architecture
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        เรียนรู้ศาสตร์การสร้าง <br class="hidden sm:inline"/>
+                        <span class="bg-gradient-to-r from-brand-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
+                            แอปพลิเคชันยุคใหม่
+                        </span>
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-light">
+                        ครอบคลุมทักษะตั้งแต่พื้นฐานการออกแบบ UI/UX, การเขียนโปรแกรม Frontend/Backend, สถาปัตยกรรมระบบ คลาวด์ จนถึงการนำระบบขึ้นสู่สโตร์จริง
+                    </p>
+
+                    <!-- Fast Action Buttons -->
+                    <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2">
+                        <a href="#modules" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-600/30 transition-all hover:-translate-y-0.5">
+                            สำรวจหัวข้อการเรียน
+                        </a>
+                        <a href="#interactive-lab" class="px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-sm sm:text-base shadow-sm transition-all hover:-translate-y-0.5">
+                            ทดลองเขียนโปรแกรมจำลอง
+                        </a>
+                    </div>
+
+                    <!-- Highlights Banner -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10 text-left">
+                        <div class="p-4 bg-white/80 rounded-2xl border border-slate-200 shadow-sm backdrop-blur-sm">
+                            <i data-lucide="layers" class="w-6 h-6 text-brand-600 mb-2"></i>
+                            <div class="font-bold text-slate-900 text-lg">6 โมดูลหลัก</div>
+                            <div class="text-xs text-slate-500">เข้มข้นตั้งแต่ศูนย์ถึงชิ้นงาน</div>
+                        </div>
+                        <div class="p-4 bg-white/80 rounded-2xl border border-slate-200 shadow-sm backdrop-blur-sm">
+                            <i data-lucide="smartphone" class="w-6 h-6 text-emerald-600 mb-2"></i>
+                            <div class="font-bold text-slate-900 text-lg">Cross-Platform</div>
+                            <div class="text-xs text-slate-500">Web, iOS, & Android</div>
+                        </div>
+                        <div class="p-4 bg-white/80 rounded-2xl border border-slate-200 shadow-sm backdrop-blur-sm">
+                            <i data-lucide="database" class="w-6 h-6 text-amber-600 mb-2"></i>
+                            <div class="font-bold text-slate-900 text-lg">API & Cloud</div>
+                            <div class="text-xs text-slate-500">REST, GraphQL, Database</div>
+                        </div>
+                        <div class="p-4 bg-white/80 rounded-2xl border border-slate-200 shadow-sm backdrop-blur-sm">
+                            <i data-lucide="award" class="w-6 h-6 text-purple-600 mb-2"></i>
+                            <div class="font-bold text-slate-900 text-lg">Project-Based</div>
+                            <div class="text-xs text-slate-500">สร้างโครงงานจริงเป็นพอร์ต</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Overview -->
+        <section id="overview" class="py-16 md:py-24 border-t border-slate-200 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mb-12">
+                    <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-600 mb-2">คำอธิบายและเป้าหมาย</h2>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-slate-900">วิชานี้เรียนอะไร และทำไมจึงสำคัญ?</h3>
+                    <p class="text-slate-600 mt-3 leading-relaxed">
+                        ในยุคดิจิทัล แอปพลิเคชันไม่ได้เป็นเพียงแค่ซอฟต์แวร์ แต่เป็นสะพานเชื่อมประสบการณ์ของผู้ใช้เข้ากับบริการของธุรกิจ วิชาการพัฒนาแอปพลิเคชันมุ่งเน้นให้นักศึกษาสามารถบูรณาการความคิดสร้างสรรค์ การออกแบบ และการเขียนโค้ดเพื่อแก้ปัญหาจริงได้อย่างมีแบบแผน
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+                            <i data-lucide="palette" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">1. Human-Centered Design</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            เรียนรู้หลักการ UX/UI, Wireframing, และ Design System เพื่อให้แอปพลิเคชันเข้าถึงง่าย ใช้งานสะดวก และตอบสนองพฤติกรรมผู้ใช้
+                        </p>
+                    </div>
+
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">2. Architecture & Clean Code</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            การวางสถาปัตยกรรมแบบ MVC, MVVM หรือ Clean Architecture การจัดการ State Management และการเขียนโค้ดที่บำรุงรักษาง่าย
+                        </p>
+                    </div>
+
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center mb-4">
+                            <i data-lucide="rocket" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">3. DevOps & Deployment</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            ระบบ CI/CD Pipeline การทดสอบอัตโนมัติ (Automated Testing) และการเตรียมพร้อมเผยแพร่ผ่าน App Store, Google Play Store หรือ Web Hosting
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Modules / Curriculum -->
+        <section id="modules" class="py-16 md:py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-600">หลักสูตรการสอน</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">สารบัญเนื้อหาการเรียนรู้ (Curriculum)</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2">จำแนกเป็น 6 หน่วยการเรียนรู้หลัก เรียงลำดับจากง่ายสู่กระบวนการพัฒนาขั้นสูง</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Module 1 -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-300 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md">Module 01</span>
+                            <span class="text-xs text-slate-400">สัปดาห์ที่ 1 - 2</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Introduction & Environment</h3>
+                        <p class="text-sm text-slate-600 mb-4">พื้นฐานประเภทของแอปพลิเคชัน (Native, Hybrid, Web), การติดตั้งเครื่องมือ IDE, Node.js, Git, และ SDKs</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> ทำความรู้จัก Native vs Cross-platform</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> การใช้งาน Git & GitHub ร่วมกัน</li>
+                        </ul>
+                    </div>
+
+                    <!-- Module 2 -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-300 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md">Module 02</span>
+                            <span class="text-xs text-slate-400">สัปดาห์ที่ 3 - 5</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Modern UI/UX & Frontend</h3>
+                        <p class="text-sm text-slate-600 mb-4">การสร้างหน้าจอด้วย Declarative UI (React Native / Flutter / SwiftUI), Flexbox, Responsive, และ Component Life Cycle</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> Atomic Design & Components</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> การออกแบบเพื่อ Touch Gesture</li>
+                        </ul>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-300 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md">Module 03</span>
+                            <span class="text-xs text-slate-400">สัปดาห์ที่ 6 - 8</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">State Management & Navigation</h3>
+                        <p class="text-sm text-slate-600 mb-4">การจัดการข้อมูลสถานะของแอปพลิเคชันข้ามหน้าจอ เช่น Context API, Redux, Zustand หรือ Bloc พร้อมระบบ Deep Link</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> Stack & Tab Navigation</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> Global State vs Local State</li>
+                        </ul>
+                    </div>
+
+                    <!-- Module 4 -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-300 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md">Module 04</span>
+                            <span class="text-xs text-slate-400">สัปดาห์ที่ 9 - 11</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Backend & API Integration</h3>
+                        <p class="text-sm text-slate-600 mb-4">การเชื่อมต่อ REST API, GraphQL, การยืนยันตัวตนด้วย JWT, OAuth และการทำงานร่วมกับ Cloud Database (Firestore / PostgreSQL)</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> Authentication & Security Token</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> การจัดเก็บข้อมูล Offline ด้วย Local Storage</li>
+                        </ul>
+                    </div>
+
+                    <!-- Module 5 -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-300 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md">Module 05</span>
+                            <span class="text-xs text-slate-400">สัปดาห์ที่ 12 - 13</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Native Features & Sensors</h3>
+                        <p class="text-sm text-slate-600 mb-4">การเรียกใช้งานฮาร์ดแวร์ของอุปกรณ์ เช่น กล้องถ่ายรูป, พิกัด GPS, การแจ้งเตือน Push Notification, และเซนเซอร์ต่างๆ</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> การขอ Permission ตามมาตรฐานความปลอดภัย</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> Cloud Messaging (FCM / APNs)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Module 6 -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-300 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-semibold rounded-md">Module 06</span>
+                            <span class="text-xs text-slate-400">สัปดาห์ที่ 14 - 16</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Testing, Build & Store Release</h3>
+                        <p class="text-sm text-slate-600 mb-4">การทำ Unit Testing, End-to-End Testing, การ Optimize ขนาดไฟล์ และขั้นตอนการนำแอปขึ้น Store</p>
+                        <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> App Store Guidelines & Compliance</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i> นำเสนอโครงงานปิดภาคเรียน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Tech Stack -->
+        <section id="techstack" class="py-16 md:py-24 bg-white border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-600">เทคโนโลยีและเครื่องมือ</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">เทคโนโลยีที่ใช้ในการเรียนการสอน</h2>
+                    <p class="text-slate-600 text-sm mt-2">เลือกประเภทของเทคโนโลยีเพื่อดูรายละเอียดและเหตุผลในการนำมาใช้</p>
+                </div>
+
+                <!-- Tabs for Tech Stack -->
+                <div class="flex justify-center mb-8">
+                    <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 max-w-full overflow-x-auto">
+                        <button onclick="filterTech('frontend')" id="tab-frontend" class="tech-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white text-brand-600 shadow-sm transition-all">
+                            Frontend & Frameworks
+                        </button>
+                        <button onclick="filterTech('backend')" id="tab-backend" class="tech-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                            Backend & Database
+                        </button>
+                        <button onclick="filterTech('tools')" id="tab-tools" class="tech-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                            Dev Tools & Deployment
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tech Cards Grid -->
+                <div id="tech-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Tech items inserted via JS or dynamic markup -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: SDLC -->
+        <section id="sdlc" class="py-16 md:py-24 bg-slate-900 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-radial-gradient opacity-10 pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-400">วงจรชีวิตการพัฒนา</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-white mt-2">ขั้นตอน SDLC สำหรับนักพัฒนาแอปพลิเคชัน</h2>
+                    <p class="text-slate-400 text-sm mt-2">กระบวนการมาตรฐานระดับสากลในการส่งมอบผลงานอย่างมีประสิทธิภาพ</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 relative">
+                    <!-- Step 1 -->
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500 transition-all">
+                        <div class="text-indigo-400 text-2xl font-black mb-3">01</div>
+                        <h3 class="font-bold text-base mb-2">Requirement & Planning</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">รวบรวมความต้องการ วิเคราะห์กลุ่มผู้ใช้เป้าหมาย กำหนดขอบเขต MVP และเลือก Stack</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500 transition-all">
+                        <div class="text-indigo-400 text-2xl font-black mb-3">02</div>
+                        <h3 class="font-bold text-base mb-2">UI/UX Prototype</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">ออกแบบ Wireframe, User Journey และ Mockup ผ่าน Figma พร้อมทดสอบ Usability</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500 transition-all">
+                        <div class="text-indigo-400 text-2xl font-black mb-3">03</div>
+                        <h3 class="font-bold text-base mb-2">Development</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">เขียนโปรแกรมตามโครงสร้าง Modular, จัดการ State, เชื่อมต่อ API และทดสอบส่วนย่อย</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500 transition-all">
+                        <div class="text-indigo-400 text-2xl font-black mb-3">04</div>
+                        <h3 class="font-bold text-base mb-2">Testing & QA</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">ทำ Unit Test, Integration Test และตรวจจับข้อผิดพลาด (Bugs) บนอุปกรณ์จริงหลายขนาด</p>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500 transition-all">
+                        <div class="text-indigo-400 text-2xl font-black mb-3">05</div>
+                        <h3 class="font-bold text-base mb-2">Deploy & Maintain</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Publish ขึ้น Store, มอนิเตอร์ Performance, Crashlytics และอัปเดตเวอร์ชันตามฟีดแบ็ก</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Interactive Lab -->
+        <section id="interactive-lab" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mb-12">
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-600">จำลองการทำงาน</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">Interactive Code Lab: การเรียก API ในแอป</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2">
+                        ทดลองดูว่าในโค้ดแอปพลิเคชันจริง ดึงข้อมูลจากเซิร์ฟเวอร์และแสดงผลบนหน้าจอได้อย่างไร
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-xl border border-slate-800">
+                    <!-- Left: Code snippet display -->
+                    <div class="lg:col-span-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                    <span class="text-xs text-slate-400 font-mono ml-2">fetchDataService.js</span>
+                                </div>
+                                <button onclick="copyCodeSnippet()" id="copy-btn" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded-md transition-colors">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span id="copy-text">คัดลอกโค้ด</span>
+                                </button>
+                            </div>
+                            <pre class="code-container text-xs sm:text-sm text-slate-300 leading-relaxed overflow-x-auto p-2" id="sample-code">
+<span class="text-purple-400">async function</span> <span class="text-blue-400">loadUserProfiles</span>() {
+  <span class="text-slate-500">// จำลองการเรียก RESTful API เพื่อดึงรายชื่อผู้ใช้</span>
+  <span class="text-purple-400">try</span> {
+    <span class="text-purple-400">const</span> response = <span class="text-purple-400">await</span> <span class="text-emerald-400">fetch</span>(<span class="text-amber-300">'https://api.appdev.edu/users'</span>);
+    <span class="text-purple-400">const</span> data = <span class="text-purple-400">await</span> response.json();
+    <span class="text-blue-400">renderUI</span>(data);
+  } <span class="text-purple-400">catch</span> (err) {
+    console.error(<span class="text-amber-300">'API Error:'</span>, err);
+  }
+}</pre>
+                        </div>
+
+                        <!-- Run Button -->
+                        <div class="pt-4 border-t border-slate-800 mt-6 flex flex-wrap items-center justify-between gap-3">
+                            <span class="text-xs text-slate-400">คลิกปุ่มเพื่อจำลองสถานะการ Fetching และ State Update</span>
+                            <button onclick="simulateApiCall()" id="run-btn" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
+                                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                                <span>รันโค้ดจำลอง (Fetch Data)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Simulated Mobile View -->
+                    <div class="lg:col-span-5 bg-slate-950 rounded-2xl p-4 border border-slate-800 flex flex-col items-center">
+                        <div class="text-xs text-slate-400 font-mono mb-2 flex items-center gap-1.5">
+                            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> จำลองหน้าจอบนอุปกรณ์ (App Screen)
+                        </div>
+                        <!-- Phone Frame -->
+                        <div class="w-full max-w-[280px] bg-slate-100 rounded-[2.5rem] border-4 border-slate-800 p-3 shadow-2xl relative">
+                            <!-- Speaker / Camera Notch -->
+                            <div class="w-20 h-4 bg-slate-800 rounded-full mx-auto mb-3"></div>
+
+                            <!-- Screen Contents -->
+                            <div class="bg-white rounded-2xl p-3 min-h-[310px] flex flex-col text-slate-800 shadow-inner" id="phone-screen">
+                                <div class="text-xs font-bold text-slate-900 border-b pb-2 mb-2 flex justify-between items-center">
+                                    <span>รายชื่อผู้ใช้งานระบบ</span>
+                                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-100 text-brand-700">Online</span>
+                                </div>
+                                <div id="phone-content" class="flex-grow flex flex-col items-center justify-center text-center text-slate-400 space-y-2">
+                                    <i data-lucide="inbox" class="w-8 h-8 stroke-1"></i>
+                                    <p class="text-xs">ยังไม่มีข้อมูล<br>กดปุ่ม "รันโค้ดจำลอง" ด้านซ้าย</p>
+                                </div>
+                            </div>
+
+                            <!-- Home Indicator -->
+                            <div class="w-24 h-1 bg-slate-400 rounded-full mx-auto mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Quiz -->
+        <section id="quiz" class="py-16 md:py-24 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-600">ทบทวนความเข้าใจ</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">Mini Quiz: วัดความเข้าใจพื้นฐาน</h2>
+                    <p class="text-slate-600 text-sm mt-1">ทดสอบความพร้อมก่อนเริ่มเรียนรู้การสร้างแอปพลิเคชัน</p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm" id="quiz-box">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                        <span class="text-xs font-semibold text-brand-600 uppercase" id="quiz-progress">ข้อที่ 1 จาก 3</span>
+                        <span class="text-xs bg-slate-100 px-2.5 py-1 rounded-full text-slate-600" id="quiz-score">คะแนน: 0</span>
+                    </div>
+
+                    <div id="quiz-content">
+                        <!-- Questions injected by JS -->
+                    </div>
+
+                    <div id="quiz-feedback" class="hidden mt-4 p-4 rounded-xl text-sm font-medium"></div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                        <button onclick="nextQuestion()" id="next-quiz-btn" class="hidden px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-all">
+                            ข้อถัดไป
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Creator / Showcase (หน้าสุดท้าย) -->
+        <section id="creator" class="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-600">ข้อมูลผู้จัดทำและผลงาน</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-2">ประวัติและภาพประกอบผลงาน</h2>
+                    <p class="text-slate-600 text-sm mt-2">หน้ารายงานผู้พัฒนาโครงงานวิชาการพัฒนาแอปพลิเคชัน</p>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-0">
+                    <!-- Left: Google Drive Image Preview Container -->
+                    <div class="md:col-span-5 bg-slate-900 flex flex-col items-center justify-center p-6 sm:p-8 relative group overflow-hidden">
+                        <div class="relative w-full max-w-xs aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-700 bg-slate-800 flex items-center justify-center">
+                            <!-- Direct Image Render from Google Drive -->
+                            <img 
+                                src="https://lh3.googleusercontent.com/d/1pE9RcFzl_njtc0lAJpFgypuyv5S_h2ib=w800" 
+                                alt="ภาพผลงาน / ผู้จัดทำ - นายนัทวัฒน์ หรนจันทร์" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id=1pE9RcFzl_njtc0lAJpFgypuyv5S_h2ib&sz=w800';"
+                            />
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-80"></div>
+                            
+                            <!-- Overlay Badge -->
+                            <div class="absolute bottom-3 left-3 right-3 text-white text-xs flex items-center justify-between">
+                                <span class="bg-brand-600/90 backdrop-blur-sm px-2.5 py-1 rounded-md font-medium text-[11px]">Drive Image</span>
+                                <span class="text-slate-300 font-mono text-[11px]">ID: 009</span>
+                            </div>
+                        </div>
+
+                        <a href="https://drive.google.com/file/d/1pE9RcFzl_njtc0lAJpFgypuyv5S_h2ib/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-1.5 text-xs text-indigo-300 hover:text-white transition-colors">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                            <span>เปิดดูภาพขนาดเต็มใน Google Drive</span>
+                        </a>
+                    </div>
+
+                    <!-- Right: Creator Info Card -->
+                    <div class="md:col-span-7 p-6 sm:p-10 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold">
+                                <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+                                <span>ผู้พัฒนาโครงงาน / นักศึกษา</span>
+                            </div>
+
+                            <div class="space-y-1">
+                                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                                    นายนัทวัฒน์ หรนจันทร์
+                                </h3>
+                                <p class="text-lg font-bold text-brand-600 font-mono">
+                                    รหัสนักศึกษา: 009
+                                </p>
+                            </div>
+
+                            <p class="text-slate-600 text-sm leading-relaxed pt-2">
+                                ผู้จัดทำเว็บไซต์สื่อการเรียนรู้รายวิชาการพัฒนาแอปพลิเคชัน (Application Development) โดยมุ่งเน้นการถ่ายทอดองค์ความรู้ด้าน Modern UI/UX, การเชื่อมต่อ REST API, สถาปัตยกรรมระบบ และกระบวนการพัฒนาซอฟต์แวร์ตามมาตรฐาน SDLC
+                            </p>
+
+                            <!-- Information Badges -->
+                            <div class="grid grid-cols-2 gap-3 pt-3">
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                                    <div class="text-[11px] text-slate-400 font-medium">รายวิชา</div>
+                                    <div class="text-xs sm:text-sm font-bold text-slate-800">การพัฒนาแอปพลิเคชัน</div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                                    <div class="text-[11px] text-slate-400 font-medium">สถานะโครงงาน</div>
+                                    <div class="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        เผยแพร่สมบูรณ์
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Drive Button -->
+                        <div class="pt-8 border-t border-slate-100 mt-6 flex flex-wrap gap-3">
+                            <a href="https://drive.google.com/file/d/1pE9RcFzl_njtc0lAJpFgypuyv5S_h2ib/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center gap-2 shadow-md shadow-brand-500/25 transition-all hover:scale-105">
+                                <i data-lucide="folder-symlink" class="w-4 h-4"></i>
+                                <span>เข้าดูไฟล์ใน Google Drive</span>
+                            </a>
+                            <a href="#hero" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center gap-1.5 transition-colors">
+                                <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                                <span>กลับสู่ด้านบน</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Resources & Guides -->
+        <section class="py-12 bg-white border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-brand-600 to-indigo-700 rounded-3xl p-6 sm:p-10 text-white shadow-xl">
+                    <div class="space-y-2 text-center md:text-left">
+                        <h3 class="text-xl sm:text-2xl font-bold">เอกสารประกอบการเรียนและ Roadmap ฉบับเต็ม</h3>
+                        <p class="text-indigo-100 text-sm max-w-xl">
+                            ดาวน์โหลดคู่มือการติดตั้งสภาพแวดล้อม (Environment Setup Guide), ลิสต์คลังคำสั่ง และตารางเรียนตลอดภาคการศึกษา
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="showDownloadNotice()" class="px-5 py-3 bg-white text-brand-700 hover:bg-slate-100 font-bold rounded-xl text-sm flex items-center gap-2 shadow-sm transition-all hover:scale-105">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>ดาวน์โหลด Syllabus (PDF)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification Element -->
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-800 text-sm">
+        <i data-lucide="info" class="w-5 h-5 text-brand-400"></i>
+        <span id="toast-message">ข้อความแจ้งเตือน</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 text-sm py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-bold text-lg">
+                        <i data-lucide="code-2" class="w-5 h-5 text-brand-400"></i>
+                        <span>AppDev 101</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        เว็บพอร์ทัลเพื่อการศึกษา พัฒนาทักษะวิศวกรรมซอฟต์แวร์และการพัฒนาโมบายล์แอปพลิเคชันอย่างเป็นระบบ
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">หมวดหมู่วิชา</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#overview" class="hover:text-white transition-colors">จุดประสงค์การเรียนรู้</a></li>
+                        <li><a href="#modules" class="hover:text-white transition-colors">แผนการสอน 16 สัปดาห์</a></li>
+                        <li><a href="#sdlc" class="hover:text-white transition-colors">ขั้นตอนการส่งงานโครงงาน</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">เทคโนโลยีหลัก</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><span class="hover:text-white cursor-pointer" onclick="filterTech('frontend')">Flutter / React Native</span></li>
+                        <li><span class="hover:text-white cursor-pointer" onclick="filterTech('backend')">Node.js / Firebase / PostgreSQL</span></li>
+                        <li><span class="hover:text-white cursor-pointer" onclick="filterTech('tools')">Docker & GitHub Actions</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold text-xs uppercase tracking-wider mb-3">ช่องทางติดต่ออาจารย์</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-3.5 h-3.5"></i> appdev-course@university.edu</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ห้องพักคณาจารย์ ภาควิชาวิทยาการคอมพิวเตอร์</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-800 text-xs text-center text-slate-500">
+                &copy; 2026 หลักสูตรการพัฒนาแอปพลิเคชัน (Application Development) — เพื่อประโยชน์ทางการศึกษา
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tech Stack Data
+        const techData = [
+            {
+                category: 'frontend',
+                title: 'Flutter & Dart',
+                tag: 'Cross-Platform',
+                desc: 'เฟรมเวิร์กยอดนิยมจาก Google เขียนโค้ดชุดเดียวคอมไพล์เป็นเนทีฟทั้ง iOS, Android, Web และ Desktop พร้อมประสิทธิภาพสูง',
+                badgeColor: 'bg-sky-100 text-sky-800'
+            },
+            {
+                category: 'frontend',
+                title: 'React Native',
+                tag: 'Cross-Platform',
+                desc: 'ต่อยอดทักษะจาก JavaScript & React สู่การสร้าง Mobile App ระดับ Production พร้อม Ecosystem ชุมชนที่กว้างขวาง',
+                badgeColor: 'bg-indigo-100 text-indigo-800'
+            },
+            {
+                category: 'frontend',
+                title: 'Swift & SwiftUI',
+                tag: 'Native iOS',
+                desc: 'การพัฒนาสำหรับระบบนิเวศของ Apple โดยเฉพาะ ด้วยภาษา Swift ที่ทันสมัย มีความปลอดภัยสูง และออกแบบ UI ได้รวดเร็ว',
+                badgeColor: 'bg-orange-100 text-orange-800'
+            },
+            {
+                category: 'backend',
+                title: 'Node.js & Express / NestJS',
+                tag: 'Backend Runtime',
+                desc: 'สร้าง Restful API และ Real-time WebSocket รองรับคำสั่งขนาดใหญ่แบบ Asynchronous สำหรับแอปพลิเคชัน',
+                badgeColor: 'bg-emerald-100 text-emerald-800'
+            },
+            {
+                category: 'backend',
+                title: 'Firebase & Supabase',
+                tag: 'BaaS & Cloud DB',
+                desc: 'Backend-as-a-Service ที่ช่วยให้การ Authentication, Database แบบ Real-time, และ Storage เป็นเรื่องง่ายโดยไม่ต้องวางเซิร์ฟเวอร์เอง',
+                badgeColor: 'bg-amber-100 text-amber-800'
+            },
+            {
+                category: 'backend',
+                title: 'PostgreSQL & Prisma',
+                tag: 'Relational Database',
+                desc: 'ระบบฐานข้อมูลเชิงสัมพันธ์ที่เสถียรที่สุด ใช้งานควบคู่กับ Type-safe ORM เพื่อจัดการ Schema อย่างมีระบบ',
+                badgeColor: 'bg-blue-100 text-blue-800'
+            },
+            {
+                category: 'tools',
+                title: 'Figma',
+                tag: 'UI/UX Design',
+                desc: 'เครื่องมือออกแบบหน้าจอ Prototype และทดสอบความลื่นไหลของ User Journey ร่วมกันแบบเรียลไทม์ระหว่างนักออกแบบและผู้พัฒนา',
+                badgeColor: 'bg-purple-100 text-purple-800'
+            },
+            {
+                category: 'tools',
+                title: 'Postman',
+                tag: 'API Testing',
+                desc: 'แพลตฟอร์มสำหรับทดสอบส่ง Request ตรวจสอบ Header, Payload และจำลอง Mock Server ก่อนเริ่มเขียน Frontend',
+                badgeColor: 'bg-rose-100 text-rose-800'
+            },
+            {
+                category: 'tools',
+                title: 'GitHub & CI/CD Actions',
+                tag: 'DevOps & Version Control',
+                desc: 'ควบคุมเวอร์ชันของซอร์สโค้ด และสร้างระบบตรวจเช็ก Code Quality พร้อม Build APK/IPA อัตโนมัติทุกครั้งที่ผสานโค้ด',
+                badgeColor: 'bg-slate-100 text-slate-800'
+            }
+        ];
+
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: '1. ข้อใดอธิบายประโยชน์สูงสุดของการใช้ Cross-Platform Framework (เช่น Flutter หรือ React Native) ได้ถูกต้อง?',
+                options: [
+                    'ทำงานได้เร็วกว่า Native App ทุกกรณี 100%',
+                    'เขียนโค้ดฐานเดียว (Single Codebase) แต่สามารถบิลด์ลงทั้ง iOS และ Android ได้',
+                    'ไม่ต้องขออนุญาต Permissions จากผู้ใช้เลย',
+                    'ไม่จำเป็นต้องเชื่อมต่ออินเทอร์เน็ตในการทำงาน'
+                ],
+                correct: 1,
+                explanation: 'Cross-Platform Framework ช่วยประหยัดเวลาและทรัพยากรทีมงาน โดยเขียนโค้ดชุดเดียวแต่แปลงไปใช้งานได้ทั้งระบบปฏิบัติการ iOS และ Android'
+            },
+            {
+                question: '2. State Management ในการพัฒนาแอปพลิเคชันมีหน้าที่หลักเพื่อสิ่งใด?',
+                options: [
+                    'จัดการและอัปเดตข้อมูลสถานะของแอป ให้ส่วนแสดงผล UI ซิงค์ตรงกันทั่วทั้งระบบ',
+                    'ทำหน้าที่เป็น Server จัดเก็บฐานข้อมูลขนาดใหญ่',
+                    'ใช้สำหรับวาดภาพกราฟิก 3 มิติเท่านั้น',
+                    'ใช้เพื่อเข้ารหัสแอปพลิเคชันไม่ให้โดนแฮก'
+                ],
+                correct: 0,
+                explanation: 'State Management ทำหน้าที่ควบคุมและกระจายข้อมูล เช่น ข้อมูลผู้ใช้ล็อกอิน ตะกร้าสินค้า ให้ทุกหน้าจอรับรู้สถานะตรงกันอย่างถูกต้อง'
+            },
+            {
+                question: '3. ขั้นตอนใดในวงจรการพัฒนา (SDLC) ที่ควรดำเนินการเป็นอันดับแรกก่อนเริ่มลงมือเขียนโค้ดจริง?',
+                options: [
+                    'Deploy ขึ้น Apple App Store ทันที',
+                    'ทำ Performance Tuning และขยายขนาดเซิร์ฟเวอร์',
+                    'การเก็บความต้องการและวางแผน (Requirement Gathering & Planning)',
+                    'สร้าง Unit Testing ครบทุกฟังก์ชัน'
+                ],
+                correct: 2,
+                explanation: 'ก่อนเริ่มเขียนโปรแกรม ต้องศึกษา Requirement และวางแผนว่าใครคือผู้ใช้ ปัญหาคืออะไร และแอปต้องมีฟีเจอร์ใดบ้าง (MVP)'
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let userScore = 0;
+        let answered = false;
+
+        // Render Tech Stack Cards
+        function filterTech(category) {
+            // Update Tab styles
+            document.querySelectorAll('.tech-tab').forEach(tab => {
+                tab.classList.remove('bg-white', 'text-brand-600', 'shadow-sm');
+                tab.classList.add('text-slate-600');
+            });
+            const activeTab = document.getElementById(`tab-${category}`);
+            if (activeTab) {
+                activeTab.classList.add('bg-white', 'text-brand-600', 'shadow-sm');
+                activeTab.classList.remove('text-slate-600');
+            }
+
+            // Filter items
+            const filtered = techData.filter(item => item.category === category);
+            const container = document.getElementById('tech-grid');
+            container.innerHTML = '';
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'p-6 bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 transition-all hover:shadow-md flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md ${item.badgeColor}">${item.tag}</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">${item.title}</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.desc}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center text-xs text-brand-600 font-medium">
+                        <span>ดูแนวทางการใช้งาน</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Quiz Logic
+        function renderQuiz() {
+            if (currentQuizIndex >= quizQuestions.length) {
+                // Completed
+                document.getElementById('quiz-box').innerHTML = `
+                    <div class="text-center py-8 space-y-4">
+                        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="check-circle" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800">ยินดีด้วย! คุณทำแบบทดสอบครบแล้ว</h3>
+                        <p class="text-sm text-slate-600">คะแนนของคุณ: <span class="text-brand-600 font-bold text-lg">${userScore}</span> จากทั้งหมด ${quizQuestions.length} คะแนน</p>
+                        <button onclick="restartQuiz()" class="px-5 py-2.5 bg-brand-600 text-white rounded-xl text-sm font-semibold hover:bg-brand-700 transition-all">
+                            ทำแบบทดสอบอีกครั้ง
+                        </button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-progress').textContent = `ข้อที่ ${currentQuizIndex + 1} จาก ${quizQuestions.length}`;
+            document.getElementById('quiz-score').textContent = `คะแนน: ${userScore}`;
+
+            let html = `
+                <h4 class="text-base sm:text-lg font-bold text-slate-800 mb-4">${q.question}</h4>
+                <div class="space-y-2.5">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `
+                    <button onclick="selectAnswer(${idx})" id="opt-${idx}" class="quiz-option w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-700 hover:bg-slate-50 transition-all flex items-center justify-between">
+                        <span>${opt}</span>
+                        <span class="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[10px]"></span>
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+            document.getElementById('quiz-content').innerHTML = html;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('next-quiz-btn').classList.add('hidden');
+            answered = false;
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizQuestions[currentQuizIndex];
+            const feedbackEl = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('next-quiz-btn');
+
+            const allButtons = document.querySelectorAll('.quiz-option');
+            allButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === q.correct) {
+                userScore++;
+                document.getElementById(`opt-${selectedIndex}`).classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-800');
+                feedbackEl.className = 'mt-4 p-4 rounded-xl text-xs sm:text-sm bg-emerald-50 text-emerald-800 border border-emerald-200';
+                feedbackEl.innerHTML = `<strong>ถูกต้อง! 🎉</strong> ${q.explanation}`;
+            } else {
+                document.getElementById(`opt-${selectedIndex}`).classList.add('bg-rose-50', 'border-rose-500', 'text-rose-800');
+                document.getElementById(`opt-${q.correct}`).classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-800');
+                feedbackEl.className = 'mt-4 p-4 rounded-xl text-xs sm:text-sm bg-rose-50 text-rose-800 border border-rose-200';
+                feedbackEl.innerHTML = `<strong>ยังไม่ถูกต้อง</strong> ${q.explanation}`;
+            }
+
+            feedbackEl.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+            document.getElementById('quiz-score').textContent = `คะแนน: ${userScore}`;
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            renderQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            userScore = 0;
+            location.href = '#quiz';
+            location.reload();
+        }
+
+        // Simulate Interactive Lab API Call
+        function simulateApiCall() {
+            const screen = document.getElementById('phone-content');
+            const runBtn = document.getElementById('run-btn');
+            
+            runBtn.disabled = true;
+            runBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>กำลังเรียก API...</span>`;
+            lucide.createIcons();
+
+            screen.innerHTML = `
+                <div class="flex flex-col items-center justify-center space-y-2 py-8">
+                    <div class="w-7 h-7 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
+                    <span class="text-xs text-slate-400">Loading State Active...</span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                // Mock loaded data
+                const mockUsers = [
+                    { name: 'วริศรา เจริญผล', role: 'UX Designer', avatar: '👩‍💻' },
+                    { name: 'ธนกฤต ศรีสุข', role: 'Mobile Lead', avatar: '👨‍💻' },
+                    { name: 'กานต์สินี สิทธิเดช', role: 'Backend Engineer', avatar: '👩‍🎨' }
+                ];
+
+                let userListHtml = `<div class="w-full space-y-2 text-left">`;
+                mockUsers.forEach(u => {
+                    userListHtml += `
+                        <div class="p-2.5 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-3">
+                            <span class="text-xl">${u.avatar}</span>
+                            <div>
+                                <div class="text-xs font-bold text-slate-800">${u.name}</div>
+                                <div class="text-[10px] text-slate-400">${u.role}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                userListHtml += `</div>`;
+
+                screen.innerHTML = userListHtml;
+                runBtn.disabled = false;
+                runBtn.innerHTML = `<i data-lucide="rotate-ccw" class="w-4 h-4"></i><span>ทดลองใหม่อีกครั้ง</span>`;
+                lucide.createIcons();
+                showToast('ดึงข้อมูล API และเรนเดอร์ UI สำเร็จ!');
+            }, 1200);
+        }
+
+        // Clipboard Copy
+        function copyCodeSnippet() {
+            const code = `async function loadUserProfiles() {
+  try {
+    const response = await fetch('https://api.appdev.edu/users');
+    const data = await response.json();
+    renderUI(data);
+  } catch (err) {
+    console.error('API Error:', err);
+  }
+}`;
+            const dummy = document.createElement('textarea');
+            dummy.value = code;
+            document.body.appendChild(dummy);
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            const copyText = document.getElementById('copy-text');
+            copyText.textContent = 'คัดลอกแล้ว!';
+            setTimeout(() => {
+                copyText.textContent = 'คัดลอกโค้ด';
+            }, 2000);
+            showToast('คัดลอกตัวอย่างโค้ดลง Clipboard เรียบร้อยแล้ว');
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            msgEl.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        function showDownloadNotice() {
+            showToast('ระบบได้สร้างลิงก์ดาวน์โหลด Syllabus สำหรับการเรียนเรียบร้อย');
+        }
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on click link
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Window Init
+        window.onload = function() {
+            lucide.createIcons();
+            filterTech('frontend');
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
